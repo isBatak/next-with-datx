@@ -1,11 +1,11 @@
 import { createContext, ReactNode, ReactElement, useContext } from 'react';
-import { Collection } from 'datx';
+import { Store } from './Store';
 
-const DatxContext = createContext<null | Collection>(null);
+const DatxContext = createContext<null | Store>(null);
 
 export interface DatxProviderProps {
   readonly children?: ReactNode;
-  readonly collection: Collection;
+  readonly collection: Store;
 }
 
 export function DatxProvider({
@@ -17,7 +17,7 @@ export function DatxProvider({
   );
 }
 
-export function useDatxCollection(overrideCollection?: Collection): Collection {
+export function useDatxCollection(overrideCollection?: Store): Store {
   const collection = useContext(DatxContext);
 
   // Ensures that the number of hooks called from one render to another remains

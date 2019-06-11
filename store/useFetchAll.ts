@@ -24,14 +24,14 @@ export const useFetchAll = <TModel extends IJsonapiModel>(
 ): IFetchAllHookState<TModel> => {
   const collection = useDatxCollection();
   const ssrManager = useContext(SSRContext);
-  const ssrInUse = ssr && ssrManager;
+  // const ssrInUse = ssr && ssrManager;
 
   // Skips when `skip: true` or SSRContext passed but `ssr: false`
-  const shouldSkip = skip || (ssrManager != null && !ssr);
+  // const shouldSkip = skip || (ssrManager != null && !ssr);
 
   const view = useMemo(
     () => getCachedView<TModel>(model, collection, options),
-    [collection, options],
+    [],
   );
 
   // const [state, setState] = useState<IFetchAllHookState<TModel>>({
@@ -58,30 +58,33 @@ export const useFetchAll = <TModel extends IJsonapiModel>(
   // }, [state, options]);
 
   const currentResult: IFetchAllHookState<TModel> = useMemo(() => {
-    if (shouldSkip) {
-      return {
-        data: undefined,
-        error: undefined,
-        loading: false,
-      };
-    }
+    // if (shouldSkip) {
+    //   return {
+    //     data: undefined,
+    //     error: undefined,
+    //     loading: false,
+    //   };
+    // }
 
     return {
       data: view.list as any,
       error: undefined,
       loading: false,
     };
-  }, [shouldSkip, view]);
+  }, []);
 
-  if (suspend) {
-    // throw a promise - use the react suspense to wait until the data is available
-    throw new Promise((resolve) => view.fetchAll(options).then(resolve));
-  }
+  // if (suspend) {
+  //   console.log('test');
+  //   // throw a promise - use the react suspense to wait until the data is available
+  //   throw view.fetchAll(options);
+  // }
 
-  if (ssrInUse) {
-    // ssrManager!.register(
-    //   new Promise((resolve) => view.fetchAll(options).then(resolve)),
-    // );
+  // if (!collection.ssr) {
+  //   throw view.fetchAll(options);
+  // }
+
+  if (ssrManager) {
+    ssrManager!.register(view.fetchAll(options));
   }
 
   return currentResult;

@@ -19,7 +19,7 @@ interface IAppProps {
 }
 
 const MyApp = ({ Component, pageProps, snapshot }: AppProps & IAppProps) => {
-  const collection = initStore(snapshot);
+  const collection = initStore(snapshot, ssrMode);
   console.log(snapshot);
 
   return (
@@ -33,7 +33,7 @@ const MyApp = ({ Component, pageProps, snapshot }: AppProps & IAppProps) => {
 
 MyApp.getInitialProps = async function({ Component, ctx }: AppContext) {
   let pageProps = {};
-  const collection = initStore();
+  const collection = initStore(undefined, ssrMode);
 
   if (Component.getInitialProps) {
     pageProps = await Component.getInitialProps(ctx);
