@@ -26,6 +26,11 @@ const MyApp = ({ Component, pageProps, snapshot }: AppProps & IAppProps) => {
       <DatxProvider collection={collection}>
         <Component {...pageProps} />
       </DatxProvider>
+      <style global>{`
+        :root {
+          --main-color: #d8262c;
+        }
+      `}</style>
     </Container>
   );
 };
