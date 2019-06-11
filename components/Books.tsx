@@ -6,6 +6,8 @@ import { Book } from '../store/models/Book';
 export const Books = observer(function() {
   const { data } = useFetchAll<Book>(Book, { suspend: true });
 
+  console.log('Books', data!.length);
+
   return (
     <div>
       {data && data.map((book: Book) => <div key={book.id}>{book.title}</div>)}

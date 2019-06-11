@@ -74,7 +74,6 @@ export const useFetchAll = <TModel extends IJsonapiModel>(
   }, []);
 
   // if (suspend) {
-  //   console.log('test');
   //   // throw a promise - use the react suspense to wait until the data is available
   //   throw view.fetchAll(options);
   // }

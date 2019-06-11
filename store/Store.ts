@@ -20,12 +20,8 @@ export class Store extends jsonapi(Collection) {
   constructor(data?: IRawCollection & IRawCache, ssr?: boolean) {
     super(data);
 
-    console.log(data && data.cache);
-
     const cache = data
       ? data.cache.map(([key, rawView]: [string, IRawView]) => {
-          // @ts-ignore
-          console.log('rawView: ', key, rawView.models);
           const view = new JsonapiView(
             rawView.modelType,
             this,
@@ -33,13 +29,11 @@ export class Store extends jsonapi(Collection) {
             rawView.models,
             rawView.unique,
           );
-          // @ts-ignore
           return [key, view];
         })
       : [];
     // @ts-ignore
     this.cache = new Map(cache);
-    console.log(this.cache.size);
 
     this.ssr = ssr || false;
   }
@@ -49,7 +43,10 @@ export class Store extends jsonapi(Collection) {
 
     return {
       ...snapshot,
-      cache: Array.from(this.cache),
+      cache: Array.from(this.cache).map((cacheTuple) => [
+        cacheTuple[0],
+        cacheTuple[1].toJSON(),
+      ]),
     };
   }
 }

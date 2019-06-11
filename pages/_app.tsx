@@ -20,7 +20,6 @@ interface IAppProps {
 
 const MyApp = ({ Component, pageProps, snapshot }: AppProps & IAppProps) => {
   const collection = initStore(snapshot, ssrMode);
-  console.log(snapshot);
 
   return (
     <Container>
