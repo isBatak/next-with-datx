@@ -16,7 +16,7 @@
     "lodash": "4.17.11",
     "mobx": "4.10.0",
     "mobx-react": "6.0.3",
-    "next": "8.1.1-canary.50",
+    "next": "9.3.2",
     "react": "16.8.6",
     "react-dom": "16.8.6"
   },
